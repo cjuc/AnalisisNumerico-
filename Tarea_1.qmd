@@ -1,0 +1,52 @@
+---
+title: "Tarea 1"
+author: "Gabriel Sanabria Alvarado
+Joseph
+Cris"
+format:
+  html:
+    toc: true          
+    toc-depth: 2       
+    number-sections: true  
+    self-contained: true   
+    theme: cosmo      
+    css: styles.css   
+---
+
+## Desarrolle una función en R que reciba un DataFrame y que retorne la cantidad de entradas de este DataFrame que son divisibles entre 3.
+
+```{r}
+divisibles.3 <- function(df) {
+  
+  valores <- unlist(df)          
+  valores_numericos <- valores[is.numeric(valores)] 
+  cantidad <- sum(valores_numericos %% 3 == 0)     
+  return(cantidad)
+}
+```
+
+```{r}
+data(women)
+head(women)
+
+```
+```{r}
+divisibles.3(women)
+```
+
+
+## 14
+
+```{r}
+columnas <- function(df, num1, num2){
+  
+  
+  
+}
+```
+
+
+
+
+
+
