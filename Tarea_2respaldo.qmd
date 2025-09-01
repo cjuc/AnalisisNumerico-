@@ -1,0 +1,775 @@
+---
+title: "Tarea II"
+author: 
+  - "Gabriel Sanabria Alvarado <span style='font-size:1em; color:#555;'> | Carné: C27184 </span>"
+  - "Joseph Romero Chinchilla <span style='font-size:1em; color:#555;'> | Carné: C37006 </span>" 
+  - "Cristhofer Urrutia Cascante <span style='font-size:1em; color:#555;'> | Carné: C37996 </span>"
+date: today
+format:
+  html:
+    title-block-banner: true
+    toc: true
+    toc-title: "Ejercicios:"   
+    toc-depth: 2       
+    number-sections: false  
+    self-contained: true   
+    theme: flatly      
+    css: styles.css   
+    smooth-scroll: true 
+    highlight-style: github
+    title-block-banner-meta-font-size: 1.5em
+    title-block-banner-divider: true  
+  pdf:
+    toc: true               # tabla de contenido para PDF
+    number-sections: true
+    documentclass: article
+    fontsize: 12pt
+lang: es
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## Ejercicio 1
+
+Suponga que p\* aproxima a p con 3 dgitos significativos. Encuentre el
+intervalo en el cual p\* debe estar, si:
+
+a): p=150
+
+$$
+\frac{|x^*-150|}{|150|}< 0,5\cdot10^{-3+1}
+$$
+
+$$
+\implies 0.149925 \times 10^{3}< x^*< 0.150075\times10^3
+$$
+
+b): p=900
+
+$$
+\frac{|x^*-900|}{|900|}< 0,5\cdot10^{-3+1}
+$$ $$
+\implies 0.8955\times10^3< x^*< 0.9045\times10^3
+$$
+
+c): p=1500
+
+$$
+\frac{|x^*-1500|}{|1500|}< 0,5\cdot10^{-3+1}
+$$
+
+$$
+\implies 0.14925\times10^{-3+1}< x^*< 0.15075\times10^{3+1}
+$$ d): p=90
+
+$$
+\frac{|x^*-90|}{|90|}< 0,5\cdot10^{-3+1}
+$$ $$
+\implies 0.8955\times10^2< x^*< 0.9045\cdot10^{2}
+$$
+
+## Ejercicio 2
+
+Considere los siguientes valores para $p$ y $p^\star$:
+
+(a) $p = \pi$, \quad $p^\star = 3.1$
+
+(b) $p = \tfrac{1}{3}$, \quad $p^\star = 0.333$
+
+(c) $p = \tfrac{\pi}{1000}$, \quad $p^\star = 0.0031$
+
+(d) $p = \tfrac{100}{3}$, \quad $p^\star = 33.3$
+
+¿Cuál es el error absoluto y el error relativo al aproximar $p$ por
+$p^\star$?
+
+**Solución:**
+
+```{r}
+
+error <- function(p, ap, metodo){
+  
+  if (metodo == "abs"){
+    
+    return(abs(p - ap))
+    
+  } else {
+    
+    return(abs( (p - ap) / p ))
+    
+  }
+  
+}
+
+```
+
+```{r}
+
+error(pi, 3.1, "abs")
+error(pi, 3.1, "relativo")
+error(1/3, 0.333, "abs")
+error(1/3, 0.333, "relativo")
+error(pi/1000, 0.0031, "abs")
+error(pi/1000, 0.0031, "relativo")
+error(100/3, 33.22, "abs")
+error(100/3, 33.22, "relativo")
+
+```
+
+## Ejercicio 3
+
+![](Ejercicio%20Joseph/Ej%203/EJ%203.1.JPG){width="754"}
+
+## Ejercicio 4
+
+![](Ejercicio%20Joseph/Ej4/Ej%204.1.JPG)
+
+![](Ejercicio%20Joseph/Ej4/Ej%204.2.JPG)
+
+## Ejercicio 5
+
+Si se calcula la raíz menor en valor absoluto de la ecuación:
+
+$$
+f(x) = x^2 + 0.4002 \times 10^0 x + 0.8 \times 10^{-4} = 0
+$$
+
+con la fórmula cuadrática usual, entonces se produce una pérdida de
+dígitos significativos (¿Por qué?).\
+Encuentre una fórmula para efectuar este cálculo sin que se produzca tal
+pérdida y encuentre la raíz de menor magnitud.
+
+$$
+t=-\tfrac12\Big(b+\operatorname{sign}(b)\sqrt{b^2-4ac}\Big),
+$$
+
+y luego
+
+$$
+x_1=\frac{t}{a},\quad x_2=\frac{c}{t}.
+$$
+
+De esta forma evitamos la cancelación, y una raíz se obtiene de manera
+directa, la otra usando la relación $$x_1x_2=\tfrac{c}{a}$$.
+
+------------------------------------------------------------------------
+
+### Cálculo
+
+$$
+\Delta = b^2-4ac = 0.15984004, \quad \sqrt{\Delta}=0.3998.
+$$
+
+Como $b>0$:
+
+$$
+t=-\tfrac12(0.4002+0.3998)=-0.4.
+$$
+
+Así,
+
+$$
+x_1 = \frac{t}{a}=-0.4, \qquad x_2=\frac{c}{t}=\frac{0.00008}{-0.4}=-0.0002.
+$$
+
+------------------------------------------------------------------------
+
+### Resultado
+
+La **raíz de menor magnitud** es
+
+$$
+\boxed{x=-2\times 10^{-4}}
+$$
+
+Logrando encontrar la raíz sin pérdida de dígitos significativos.
+
+## Ejercicio 6
+
+Escriba una función en R que verifique para cualquier $n$ la siguiente
+identidad:
+
+$$
+\begin{vmatrix}
+x & a_1 & a_2 & \cdots & a_n \\
+a_1 & x & a_2 & \cdots & a_n \\
+a_1 & a_2 & x & \cdots & a_n \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+a_1 & a_2 & a_3 & \cdots & x
+\end{vmatrix}
+=
+(x + a_1 + \cdots + a_n)(x - a_1)\cdots(x - a_n).
+$$
+
+**Solución:**
+
+```{r}
+
+det_f <- function(matriz, epsilon) {
+  
+  det_mat <- det(matriz)
+  
+  fil_uno <- matriz[1, ]
+  
+  resultado = 1
+  
+  x = fil_uno[1]
+  
+  for (i in 2:length(fil_uno)) {
+    resultado = resultado * ( x - fil_uno[i])
+  }
+  
+  resultado = resultado * sum(fil_uno)
+  
+  if (abs(det_mat - resultado) < epsilon){
+    return(TRUE)
+  }
+  else {
+    return(FALSE)
+  }
+}
+
+```
+
+```{r}
+
+matriz_A <- matrix(c(5, 1, 2,
+                   1, 5, 2,
+                   1, 2, 5),
+                 nrow = 3,
+                 byrow = TRUE)
+
+matriz_A
+
+det_f(matriz_A, 10^(-6))
+
+
+```
+
+## Ejercicio 7
+
+Escriba una función en **R** que verifique para cualquier $n$ la
+siguiente identidad:
+
+$$
+\begin{vmatrix}
+1 & 1 & 1 & \cdots & 1 \\
+b_1 & a_1 & a_1 & \cdots & a_1 & a_1 \\
+b_1 & b_2 & a_2 & \cdots & a_2 & a_2 \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+b_1 & b_2 & b_3 & \cdots & b_n & a_n
+\end{vmatrix}
+=
+(a_1 - b_1)(a_2 - b_2)\cdots (a_n - b_n).
+$$ **Solución:**
+
+```{r}
+
+det_ej <- function(matriz, epsilon){
+  
+  detm <- 1
+  
+  for (i in 2:nrow(matriz)){
+    
+    detm <- detm * (matriz[i, i] - matriz[i, i - 1])
+    
+  }
+  
+  if (abs(detm - det(matriz)) < epsilon){
+    return(TRUE)
+  }else{RETURN(FALSE)}
+}
+
+```
+
+```{r}
+
+
+mat <- matrix(c(
+  1, 1, 1, 1,
+  2, 5, 5, 5,
+  2, 3, 6, 6,
+  2, 3, 4, 7
+), nrow = 4, byrow = TRUE)
+
+mat
+
+det(mat)
+
+det_ej(mat, 10^(-6))
+
+```
+
+## Ejercicio 8
+
+Se dice que una matriz es rala si esta tiene mas entradas nulas que no
+nulas (mayor estricto). Escriba una funcion en R que permita determinar
+si una matriz es rala.
+
+```{r}
+matriz.rala <- function(matriz) {
+  ceros <- 0
+  numeros <- 0
+  
+  for (i in as.vector(matriz)) {
+    if (i == 0) {
+      ceros <- ceros + 1
+    } else {
+      numeros <- numeros + 1
+    }
+  }
+  
+  if (ceros > numeros) {
+    return("Es rala")
+  } else {
+    return("No es rala")
+  }
+}
+
+matriz.prueba <- matrix(
+  c(1, 0, 0,
+    4, 5, 0,
+    7, 0, 0),
+  nrow = 3, 
+  ncol = 3,  
+  byrow = TRUE  
+)
+
+matriz.rala(matriz.prueba)
+```
+
+## Ejercicio 9
+
+Se dice que una matriz tiene forma de $O$ si todas las entradas de la
+fila $1$, fila $n$, columna $1$ y columna $m$ son no nulas, y las demás
+entradas de la matriz son nulas. Escriba una función en **R** que
+permita determinar si una matriz está en forma de $O$.
+
+**Solución:**
+
+```{r}
+
+mat_o <- function(matriz) {
+  n <- nrow(matriz)
+  m <- ncol(matriz)
+  
+  bordes <- all(matriz[1, ] != 0) &&
+               all(matriz[n, ] != 0) &&
+               all(matriz[, 1] != 0) &&
+               all(matriz[, m] != 0)
+  
+  if (n > 2 && m > 2) {
+    interior <- matriz[2:(n-1), 2:(m-1)]
+    interior_ok <- all(interior == 0)
+  } else {
+    interior_ok <- TRUE
+  }
+  
+  return(bordes && interior_ok)
+}
+
+```
+
+```{r}
+
+M <- matrix(0, nrow = 5, ncol = 4)
+
+M[1, ] <- 1        
+M[5, ] <- 1
+M[, 1] <- 1       
+M[, 4] <- 1       
+
+M
+
+mat_o(M)
+```
+
+## Ejercicio 10
+
+![](Ejercicio%20Joseph/Ej%2010/1.JPG){fig-align="left" width="605"}
+
+![](Ejercicio%20Joseph/Ej%2010/2.JPG){width="553"}
+
+![](Ejercicio%20Joseph/Ej%2010/3.JPG){width="552"}
+
+![](Ejercicio%20Joseph/Ej%2010/4.JPG){width="595"}
+
+![](Ejercicio%20Joseph/Ej%2010/5.JPG){width="586"}
+
+![](Ejercicio%20Joseph/Ej%2010/6.JPG){width="534"}
+
+![](Ejercicio%20Joseph/Ej%2010/7.JPG){width="580"}
+
+![](Ejercicio%20Joseph/Ej%2010/8.JPG){width="585"}
+
+![](Ejercicio%20Joseph/Ej%2010/9.JPG){width="588"}
+
+![](Ejercicio%20Joseph/Ej%2010/10.JPG){width="577"}
+
+## Ejercicio 11
+
+En el teorema 7, si tomamos como espacio preHilbert a $R^n$ con el
+producto punto clasico, escriba una funcion en *R* que reciba una base
+de un subespacio de $R^n$ en una lista de listas y retorne la base
+ortogonal en una lista de listas, luego otra funcion que calcule la base
+ortonormal.
+
+```{r}
+gram_schmidt <- function(basis,
+                         normalize = FALSE,         
+                         as_list_of_lists = TRUE,   
+                         tol = 1e-10) {
+  
+  to_vec <- function(x) as.numeric(unlist(x))
+  V <- lapply(basis, to_vec)
+
+
+  n <- length(V[[1]])
+  if (!all(sapply(V, length) == n))
+    stop("Todos los vectores deben tener la misma dimensión.")
+  
+  Q <- vector("list", length(V))
+  k <- 0L
+
+  for (j in seq_along(V)) {
+    v <- V[[j]]
+    for (i in seq_len(k)) {
+      qi <- Q[[i]]
+      v <- v - (sum(v * qi) / sum(qi * qi)) * qi
+    }
+    nv <- sqrt(sum(v * v))
+    if (nv <= tol)
+      stop("Dependencia lineal detectada (o casi) con la tolerancia dada.")
+    k <- k + 1L
+    if (normalize) v <- v / nv
+    Q[[k]] <- v
+  }
+
+  Q <- Q[seq_len(k)]
+  if (as_list_of_lists) Q <- lapply(Q, as.list)
+  Q
+}
+
+```
+
+```{r}
+
+B <- list(list(1, 1, 0),
+          list(1, 0, 1),
+          list(0, 1, 1))
+
+Q_ort  <- gram_schmidt(B, normalize = FALSE)
+Q_ort
+
+
+```
+
+## Ejercicio 12
+
+Repita el ejercicio anterior usando los espacios y el producto interno
+del ejemplo 7. Sera posible hacer una funcion que reciba tambien como
+parametro el producto interno como una funcion de \$R\^n \times R\^n \$
+en *R* y genere la base ortogonal y ortonormal usando este producto
+interno?
+
+```{r}
+gram_schmidt <- function(basis,
+                         ip = NULL,        
+                         normalize = FALSE,
+                         as_list_of_lists = FALSE,
+                         tol = 1e-10) {
+
+
+  if (is.null(ip)) ip <- function(a, b) sum(as.numeric(a) * as.numeric(b))
+
+  is_fun <- function(x) is.function(x)
+  scal   <- function(a, v) if (is_fun(v)) function(t) a * v(t) else a * v
+  add    <- function(u, v) if (is_fun(u)) function(t) u(t) + v(t) else u + v
+  sub    <- function(u, v) if (is_fun(u)) function(t) u(t) - v(t) else u - v
+  nrm2   <- function(v) {
+    val <- ip(v, v)
+    if (!is.finite(val)) stop("El producto interno devolvió un valor no finito.")
+    if (val < 0 && abs(val) < 1e-12) val <- 0   
+    sqrt(val)
+  }
+
+  Q <- list()
+  for (j in seq_along(basis)) {
+    v <- basis[[j]]
+    for (i in seq_along(Q)) {
+      qi <- Q[[i]]
+      v  <- sub(v, scal(ip(v, qi) / ip(qi, qi), qi))
+    }
+    nv <- nrm2(v)
+    if (nv <= tol) stop("Dependencia lineal (o casi) con la tolerancia dada.")
+    if (normalize) v <- scal(1 / nv, v)
+    Q[[length(Q) + 1L]] <- v
+  }
+  if (as_list_of_lists && !is_fun(Q[[1]])) Q <- lapply(Q, as.list)
+  Q
+}
+
+```
+
+## Ejercicio 13
+
+En el Corolario 2, si tomamos como espacio pre-Hilbert a $\mathbb{R}^n$
+con el producto punto clásico, escriba una función en **R** que reciba
+una base de un subespacio $U$ de $\mathbb{R}^n$ en una lista de listas,
+un vector de $\mathbb{R}^n$ y retorne en una lista la mejor aproximación
+a es evector en $U$.
+
+**Solución:**
+
+```{r}
+
+mejor_aprox <- function(base_ortonormal, v) {
+  
+  proj <- 0
+  
+  for (u in base_ortonormal) {
+    u <- as.numeric(u)
+    coef <- sum(v * u)  
+    proj <- proj + coef * u
+  }
+  
+  return(as.numeric(proj))
+}
+
+```
+
+```{r}
+
+base_U <- list(c(1,0,0), c(0,1,0))
+
+v <- c(1, 2, 3)
+
+mejor_aprox(base_U, v)
+
+```
+
+## Ejercicio 14
+
+Repita el ejercicio anterior usando los espacios y el producto interno
+del ejemplo 7. ¿Será posible hacer una función que reciba también como
+parámetro el producto interno como una función de
+$\mathbb{R}^n  \mathbb{R}^n$ en $\mathbb{R}$ y genere la mejor
+aproximación usando este producto interno?
+
+**Solución:**
+
+Sí, si es posible construir una función que reciba como parámetro el
+producto interno y después aplique el teorema de mejor aproximación con
+ese producto interno. Como estamos trabajando con espacios de dimensión
+finita y con producto interno, entonces por el teorema de Gram-Schmidt
+podemos hallar una base ortonormal y aplicar el Corolario 2. De hecho,
+vamos a usar esa función para resolver el ejemplo 7:
+
+```{r}
+
+mejor_aprox_ejm <- function(base_ortonormal, funcion, producto_interno) {
+  
+  coeficientes <- sapply(base_ortonormal, function(f) producto_interno(f, funcion))
+  
+  aprox <- function(x) {
+    sum(sapply(1:length(base_ortonormal), function(i) coeficientes[i] * base_ortonormal[[i]](x)))
+  }
+  
+  return(aprox)
+}
+
+prod_int <- function(f, g) {
+  integrate(function(x) f(x) * g(x), 0, 1)$value
+}
+
+ua <- function(x){1} 
+ub <- function(x){sqrt(3) * (2*x - 1)} 
+uc <- function(x){sqrt(5) * (6*(x^2) - 6*x + 1)} 
+U <- list(ua, ub, uc)
+
+f <- function(x){exp(x)}
+
+aprox_func <- mejor_aprox_ejm(U, f, prod_int)
+
+z <- seq(0, 1, length.out = 200)
+y_exp <- exp(z)
+y_aprox <- sapply(z, aprox_func)
+
+plot(z, y_exp, type = "l", col="blue", lwd = 3, main = "Comparación: exp(x) vs Aproximación", 
+     ylab = "f(x)", xlab="x")             
+lines(z, y_aprox, col = "red", lwd = 2.85, lty = 6)  
+
+legend("topleft", legend = c("exp(x)","Aproximación"), col = c("blue","red"), lty = c(1,2), lwd = c(3,2))
+
+
+
+```
+
+## Ejercicio 15
+
+![](Ejercicio%20Joseph/Ej%2015/1.JPG)
+
+## Ejercicio 16
+
+Sea $f : X \to X$ una aplicación. Denotamos por $F_f$ el conjunto de
+puntos fijos de la aplicación $f$. Prueba las siguientes propiedades:
+
+**(d)** Sea $X \neq \emptyset$ y $f : X \to X$ una aplicación. Si
+$F_f \neq \emptyset$, entonces $F_{f^n} \neq \emptyset$ para todo
+$n \in \mathbb{N}$
+
+*Solución:*
+
+Sea $x_{*}$ un punto fijo de la aplicación, es decir que
+$f(x_{*}) = x_*$. Note que
+
+$$
+f^n(x_*) = f(f^{n-1}(x_*)) = f(f(f^{n-2}(x_*))) = (\underbrace{f \circ \circ \circ f}_{\text{n veces}})(x_*)
+$$ Ahora bien, como estamos trabajando con un punto fijo $x_*$ y estamos
+haciendo la composición de aplicaciones sobre $f$ misma (o sea, las
+composiciones conmutan en este caso), asuma que se empieza a componer
+desde la composición $n$ con lo cual obtiene $x_*$, haga lo mismo con la
+composición $n-1$ y así sucesivamente hasta llegar a la composición
+$f^1(x_*)=f(x_*)=x_*$ $\implies F_{f^n} \neq \emptyset$
+[■]{style="float:right"}
+
+**(e)** Sea $X \neq \emptyset$ y $f : X \to X$ aplicación sobreyectiva,
+supóngase que $f_d^{-1} : X \to X$ es tal que $f \circ f_d^{-1} = I_X$ y
+$F_{f_d^{-1}} \neq \emptyset$ entonces $F_f \neq \emptyset$.
+
+*Solución:*
+
+Sea $y \in F_{f_d^{-1}}$, entonces $f_d^{-1}(y) = y$. Como $f$ es
+sobreyectiva y $f^{-1}_d \in X$, entonces
+$\exists z \in X : f(f_d^{-1}(y)) = z$ pero como
+$f \circ f^{-1}_d = I_X \implies f^{-1}_d(y) = z \implies F_f \neq \emptyset$
+[■]{style="float:right"}
+
+**(f)** Sea $A$ un conjunto con un número impar de elementos y
+$f : A \to A$ tal que $f^2(x) = x$ para todo $x \in A$, se tiene
+entonces que $F_f \neq \emptyset$.
+
+*Solución:*
+
+Suponga que $F_f = \emptyset$, entonces, no existe ningún elemento
+$x \in A$ tal que $f(x) = x$ y que se cumple que
+$f(f(x)) = x \ \ \forall x\in A$. Suponga que escoge $n$ elementos en
+$A$, y otros elementos $n$ elementos del mismo conjunto, entonces,
+podemos representar la aplicación $f$ de la siguiente manera:
+
+$$
+\begin{cases}
+f(x_{i_1}) = x_{j_1}, \ \ \ f(x_{j_1}) = x_{i_1}\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \cdot\\ 
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \cdot\\
+\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \cdot\\
+f(x_{i_n}) = x_{j_n}, \ \ \ f(x_{j_n}) = x_{i_n}
+\end{cases}
+$$ Ahora bien, sin pérdida de generalidad, llame al elemento restante
+como $x_{i_{n+1}}$. Este elemento debe cumplir:
+
+$$
+\begin{cases}
+f(x_{i_{n+1}}) = x_{j_{n+1}}, \ \ \ x_{i_{n+1}} \neq x_{j_{n+1}}\\
+\\
+f(f(x_{i_{n+1}})) = x_{i_{n+1}}
+\end{cases}
+$$ Sin embargo, dado que
+$|A| = 2n+1, \text{entonces} \ x_{j_{n+1}}= x_{j_{m \in \{1, . . ., n\}}}$;
+Además, este elemento cumple que
+$f(x_{j_{m \in \{1, . . ., n\}}}) = x_{i_{m \in \{1, . . ., n\}}}$.
+Entonces
+
+$$
+f(f(x_{i_{n+1}})) = f(x_{j_m}) = x_{i_{n+1}}\\
+$$ Pero como $f(x_{j_m})$ = $x_{i_{m \in \{ 1,...n \}}}$ (ya tenía
+asignado un elemento diferente)
+
+$$
+x_{i_{n+1}} = x_{i_m}
+$$ Como estamos trabajando con una aplicación, y la misma debe cumplir
+que ningún elemento $x_j$ pueda tener dos imágenes distintas, entonces
+este elemento $x_{i_{n+1}}$ ('el que sobra') no es nuevo, ya que
+$x_{j_m}$ lo tenía asignado anteriormente como $x_{i_m}$.
+
+$$
+\Rightarrow |A|= 2n (\Rightarrow \Leftarrow)
+$$
+
+Llegamos a que $|A| = 2n$ lo cual es una contradicción, ya que asumimos
+que $|A| = 2n+1$. Por lo tanto, concluya que $F_f \neq \emptyset$
+[■]{style="float:right"}
+
+**(g)** Sea $f : \mathbb{R} \to \mathbb{R}$ con $f$ continua, y acotada,
+entonces $F_f \neq \emptyset$.
+
+*Solución:*
+
+Sea $h(x) = f(x) - x$, $M: |f(x)| \leq M, \ \forall x \in \mathbb{R}$ y
+$A:= [-M,M]$. Note que para $x \in A$
+
+$$
+|f(x)| \leq M
+$$ $$
+\Rightarrow -M \leq f(x) < M
+$$ $$
+\Rightarrow \underbrace{-M-x}_{\leq \ 0 \ \forall \ x \ \in \ A} \leq h(x) \leq \underbrace{M- x}_{\geq \ 0 \ \forall x \ \in \ A}
+$$ Note que como $h(x)$ es continua al ser una suma de continuas, además
+de estar bien definida para $x \in A$, entonces por el teorema de
+valores intermedios, debe existir $x_* \in A$ tal que $h(x) = 0$ (ya que
+la desigualdad anterior indica signo alternante), lo cual implica que
+$f(x_*) = x_*$. Por lo tanto, $F_f \neq \emptyset$.
+[■]{style="float:right"}
+
+**(h)** Sea $f : \mathbb{R} \to \mathbb{R}$ con $f$ continua y
+periódica, entonces $F_f \neq \emptyset$.
+
+*Solución:*
+
+Si $f$ es continua, periódica y definida en $\mathbb{R}$, entonces
+$\exists T \in \mathbb{R} : f(x + T) = f(x) \ \forall \ x\in \mathbb{R}$.
+
+**Proposición:** Si $f$ es periódica y continua para todo
+$x \in \mathbb{R}$ entonces $$
+f(x + nT) = f(x) \ \forall \ n \in \mathbb{Z}
+$$ Vamos a demostrar esto por inducción (asumiendo $n > 0$;
+procedimiento similar si $n \leq 0$)
+
+Caso base n = 1 ✓ (Trivial)
+
+Hipótesis inductiva:
+
+$$
+f(x + nT) = f(x)
+$$ Caso $n+1$:
+
+$$
+f(x + (n+1)T) = f((x + nT) + T)
+$$ $$
+= f(x+nT) \text{ (Por periodicidad)}
+$$
+
+$$
+= f(x) \text{ (Por hipótesis inductiva)} 
+$$
+
+**Proposición (ii):** $f$ es acotada
+
+Note que cualquier $x \in \mathbb{R}$ puede ser reescrito como
+$x = nT + r: n \in \mathbb{Z}, \ r \in [0,T]$.
+
+Note que el intervalo $[0,T]$ es cerrado y acotado, entonces por el
+teorema de Heine-Borel es compacto; además, como $f$ es continua,
+entonces por el teorema de Weierstrass, $f(r)$ alcanza su mínimo y
+máximo $\forall r\in[0,T]$, i.e.
+
+$$
+\exists m,M : m\leq f(r) \leq M
+$$ Pero como esto se cumple para todo $x \in \mathbb{R}$, entonces
+$f(x)$ alcanza su máximo y mínimo en todo $\mathbb{R}$ y es por lo tanto
+acotada.
+
+Con esto, probamos que $f$ es acotada en $\mathbb{R}$. Aplique el
+resultado del inciso anterior y concluya que $F_f \neq \emptyset$.
+[■]{style="float:right"}
